@@ -70,15 +70,12 @@ class Runner {
           throw new Error('Cannot run audit mode on different URL');
         }
       } else {
-        if (typeof runOpts.url !== 'string' || runOpts.url.length === 0) {
-          throw new Error(`You must provide a url to the runner. '${runOpts.url}' provided.`);
-        }
-
-        try {
+        // verify the url is valid and that protocol is allowed
+        if (runOpts.url && URL.isValid(runOpts.url) && URL.isProtocolAllowed(runOpts.url)) {
           // Use canonicalized URL (with trailing slashes and such)
           requestedUrl = new URL(runOpts.url).href;
-        } catch (e) {
-          throw new Error('The url provided should have a proper protocol and hostname.');
+        } else {
+          throw new LHError(LHError.errors.INVALID_URL);
         }
 
         artifacts = await Runner._gatherArtifactsFromBrowser(requestedUrl, runOpts, connection);
@@ -289,14 +286,16 @@ class Runner {
       for (const artifactName of audit.meta.requiredArtifacts) {
         const noArtifact = artifacts[artifactName] === undefined;
 
-        // If trace required, check that DEFAULT_PASS trace exists.
-        // TODO: need pass-specific check of networkRecords and traces.
-        const noTrace = artifactName === 'traces' && !artifacts.traces[Audit.DEFAULT_PASS];
+        // If trace/devtoolsLog required, check that DEFAULT_PASS trace/devtoolsLog exists.
+        // NOTE: for now, not a pass-specific check of traces or devtoolsLogs.
+        const noRequiredTrace = artifactName === 'traces' && !artifacts.traces[Audit.DEFAULT_PASS];
+        const noRequiredDevtoolsLog = artifactName === 'devtoolsLogs' &&
+            !artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
 
-        if (noArtifact || noTrace) {
+        if (noArtifact || noRequiredTrace || noRequiredDevtoolsLog) {
           log.warn('Runner',
               `${artifactName} gatherer, required by audit ${audit.meta.id}, did not run.`);
-          throw new Error(`Required ${artifactName} gatherer did not run.`);
+          throw new LHError(LHError.errors.MISSING_REQUIRED_ARTIFACT, {artifactName});
         }
 
         // If artifact was an error, output error result on behalf of audit.
@@ -314,8 +313,8 @@ class Runner {
             ` encountered an error: ${artifactError.message}`);
 
           // Create a friendlier display error and mark it as expected to avoid duplicates in Sentry
-          const error = new Error(
-              `Required ${artifactName} gatherer encountered an error: ${artifactError.message}`);
+          const error = new LHError(LHError.errors.ERRORED_REQUIRED_ARTIFACT,
+              {artifactName, errorMessage: artifactError.message});
           // @ts-ignore Non-standard property added to Error
           error.expected = true;
           throw error;
@@ -340,7 +339,10 @@ class Runner {
       const product = await audit.audit(requiredArtifacts, auditContext);
       auditResult = Audit.generateAuditResult(audit, product);
     } catch (err) {
-      log.warn(audit.meta.id, `Caught exception: ${err.message}`);
+      // Log error if it hasn't already been logged above.
+      if (err.code !== 'MISSING_REQUIRED_ARTIFACT' && err.code !== 'ERRORED_REQUIRED_ARTIFACT') {
+        log.warn(audit.meta.id, `Caught exception: ${err.message}`);
+      }
 
       Sentry.captureException(err, {tags: {audit: audit.meta.id}, level: 'error'});
       // Errors become error audit result.

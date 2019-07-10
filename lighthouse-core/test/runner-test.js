@@ -293,6 +293,24 @@ describe('Runner', () => {
       });
     });
 
+    it('outputs an error audit result when devtoolsLog required but not provided', async () => {
+      const config = new Config({
+        settings: {
+          auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
+        },
+        audits: [
+          // requires devtoolsLogs[Audit.DEFAULT_PASS]
+          'is-on-https',
+        ],
+      });
+
+      const results = await Runner.run({}, {config});
+      const auditResult = results.lhr.audits['is-on-https'];
+      assert.strictEqual(auditResult.score, null);
+      assert.strictEqual(auditResult.scoreDisplayMode, 'error');
+      assert.strictEqual(auditResult.errorMessage, 'Required devtoolsLogs gatherer did not run.');
+    });
+
     it('outputs an error audit result when missing a required artifact', () => {
       const config = new Config({
         settings: {
@@ -496,20 +514,24 @@ describe('Runner', () => {
   });
 
 
-  it('rejects when not given a URL', () => {
-    return Runner.run({}, {}).then(_ => assert.ok(false), _ => assert.ok(true));
+  it('rejects when not given a URL', async () => {
+    const config = new Config({});
+    await expect(Runner.run({}, {config})).rejects.toThrow('INVALID_URL');
   });
 
-  it('rejects when given a URL of zero length', () => {
-    return Runner.run({}, {url: ''}).then(_ => assert.ok(false), _ => assert.ok(true));
+  it('rejects when given a URL of zero length', async () => {
+    const config = new Config({});
+    await expect(Runner.run({}, {url: '', config})).rejects.toThrow('INVALID_URL');
   });
 
-  it('rejects when given a URL without protocol', () => {
-    return Runner.run({}, {url: 'localhost'}).then(_ => assert.ok(false), _ => assert.ok(true));
+  it('rejects when given a URL without protocol', async () => {
+    const config = new Config({});
+    await expect(Runner.run({}, {url: 'localhost', config})).rejects.toThrow('INVALID_URL');
   });
 
-  it('rejects when given a URL without hostname', () => {
-    return Runner.run({}, {url: 'https://'}).then(_ => assert.ok(false), _ => assert.ok(true));
+  it('rejects when given a URL without hostname', async () => {
+    const config = new Config({});
+    await expect(Runner.run({}, {url: 'https://', config})).rejects.toThrow('INVALID_URL');
   });
 
   it('only supports core audits with names matching their filename', () => {
