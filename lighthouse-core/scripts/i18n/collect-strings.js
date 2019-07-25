@@ -105,7 +105,7 @@ function computeDescription(ast, property, value, startRange) {
  *
  * @param {string} message
  * @param {Record<string, string>} examples
- * @return {Pick<CtcMessage, 'message'|'placeholders'>}
+ * @return {IncrementalCtc}
  */
 function convertMessageToCtc(message, examples = {}) {
   /** @type {IncrementalCtc} */
@@ -125,12 +125,7 @@ function convertMessageToCtc(message, examples = {}) {
 
   _ctcSanityChecks(ctc);
 
-  // Don't include placeholders if it's empty.
-  const placeholders = Object.keys(ctc.placeholders).length === 0 ? undefined : ctc.placeholders;
-  return {
-    message: ctc.message,
-    placeholders,
-  };
+  return ctc;
 }
 
 /**
@@ -335,8 +330,8 @@ function _ctcSanityChecks(icu) {
 function createPsuedoLocaleStrings(messages) {
   /** @type {Record<string, CtcMessage>} */
   const psuedoLocalizedStrings = {};
-  for (const [key, defn] of Object.entries(messages)) {
-    const message = defn.message;
+  for (const [key, ctc] of Object.entries(messages)) {
+    const message = ctc.message;
     const psuedoLocalizedString = [];
     let braceCount = 0;
     let inPlaceholder = false;
@@ -372,8 +367,8 @@ function createPsuedoLocaleStrings(messages) {
     }
     psuedoLocalizedStrings[key] = {
       message: psuedoLocalizedString.join(''),
-      description: defn.description,
-      placeholders: defn.placeholders,
+      description: ctc.description,
+      placeholders: ctc.placeholders,
     };
   }
   return psuedoLocalizedStrings;
@@ -433,19 +428,22 @@ function collectAllStringsInDir(dir, strings = {}) {
 
             const converted = convertMessageToCtc(val, examples);
 
-            const messageKey = `${relativePath} | ${key}`;
+            // Don't include placeholders if it's empty.
+            const placeholders = Object.keys(converted.placeholders).length === 0 ?
+                undefined :
+                converted.placeholders;
 
             /** @type {CtcMessage} */
-            const icuDefn = {
+            const ctc = {
               message: converted.message,
               description,
-              placeholders: converted.placeholders,
+              placeholders,
             };
 
             // check for duplicates, if duplicate, add @description as @meaning to both
-            if (seenStrings.has(icuDefn.message)) {
-              icuDefn.meaning = icuDefn.description;
-              const seenId = seenStrings.get(icuDefn.message);
+            if (seenStrings.has(ctc.message)) {
+              ctc.meaning = ctc.description;
+              const seenId = seenStrings.get(ctc.message);
               if (seenId) {
                 if (!strings[seenId].meaning) {
                   strings[seenId].meaning = strings[seenId].description;
@@ -455,10 +453,11 @@ function collectAllStringsInDir(dir, strings = {}) {
               }
             }
 
-            seenStrings.set(icuDefn.message, messageKey);
+            const messageKey = `${relativePath} | ${key}`;
 
+            seenStrings.set(ctc.message, messageKey);
 
-            strings[messageKey] = icuDefn;
+            strings[messageKey] = ctc;
 
             lastPropertyEndIndex = property.range[1];
           }
