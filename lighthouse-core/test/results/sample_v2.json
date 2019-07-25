@@ -5,7 +5,7 @@
     "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3358.0 Safari/537.36",
     "benchmarkIndex": 1000
   },
-  "lighthouseVersion": "5.1.0",
+  "lighthouseVersion": "5.2.0",
   "fetchTime": "2018-03-13T00:55:45.840Z",
   "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "finalUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
@@ -191,10 +191,10 @@
       "numericValue": 16,
       "displayValue": "20 ms"
     },
-    "cumulative-long-queuing-delay": {
-      "id": "cumulative-long-queuing-delay",
-      "title": "Cumulative Long Queuing Delay",
-      "description": "[Experimental metric] Total time period between FCP and Time to Interactive during which queuing time for any input event would be higher than 50ms.",
+    "total-blocking-time": {
+      "id": "total-blocking-time",
+      "title": "Total Blocking Time",
+      "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds.",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 116.79800000000023,
@@ -762,7 +762,7 @@
     "uses-rel-preload": {
       "id": "uses-rel-preload",
       "title": "Preload key requests",
-      "description": "Consider using <link rel=preload> to prioritize fetching resources that are currently requested later in page load. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/preload).",
+      "description": "Consider using `<link rel=preload>` to prioritize fetching resources that are currently requested later in page load. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/preload).",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
@@ -1127,7 +1127,7 @@
             "text": "URL"
           },
           {
-            "key": "serverReponseTime",
+            "key": "serverResponseTime",
             "itemType": "ms",
             "granularity": 1,
             "text": "Time Spent"
@@ -1136,11 +1136,11 @@
         "items": [
           {
             "origin": "http://localhost:10200",
-            "serverReponseTime": 572.829
+            "serverResponseTime": 572.829
           },
           {
             "origin": "http://ajax.googleapis.com",
-            "serverReponseTime": 562.398
+            "serverResponseTime": 562.398
           }
         ]
       }
@@ -1258,7 +1258,7 @@
             "speedIndex": 4417,
             "speedIndexTs": 185607736912,
             "estimatedInputLatency": 16,
-            "cumulativeLongQueuingDelay": 117,
+            "totalBlockingTime": 117,
             "observedNavigationStart": 0,
             "observedNavigationStartTs": 185603319912,
             "observedFirstPaint": 3969,
@@ -3417,7 +3417,7 @@
           "weight": 0
         },
         {
-          "id": "cumulative-long-queuing-delay",
+          "id": "total-blocking-time",
           "weight": 0
         },
         {
@@ -4047,7 +4047,7 @@
     },
     "load-opportunities": {
       "title": "Opportunities",
-      "description": "These optimizations can speed up your page load."
+      "description": "These suggestions can help your page load faster. They don't [directly affect](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) the Performance score."
     },
     "budgets": {
       "title": "Budgets",
@@ -4055,7 +4055,7 @@
     },
     "diagnostics": {
       "title": "Diagnostics",
-      "description": "More information about the performance of your application."
+      "description": "More information about the performance of your application. These numbers don't [directly affect](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) the Performance score."
     },
     "pwa-fast-reliable": {
       "title": "Fast and reliable"
@@ -4283,13 +4283,13 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:cumulative-long-queuing-delay",
+        "name": "lh:audit:total-blocking-time",
         "duration": 100,
         "entryType": "measure"
       },
       {
         "startTime": 0,
-        "name": "lh:computed:CumulativeLongQueuingDelay",
+        "name": "lh:computed:TotalBlockingTime",
         "duration": 100,
         "entryType": "measure"
       },
@@ -5112,7 +5112,7 @@
       "snippetExpandButtonLabel": "Expand snippet",
       "thirdPartyResourcesLabel": "Show 3rd-party resources",
       "toplevelWarningsMessage": "There were issues affecting this run of Lighthouse:",
-      "varianceDisclaimer": "Values are estimated and may vary.",
+      "varianceDisclaimer": "Values are estimated and may vary. The performance score is [based only on these metrics](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted).",
       "warningAuditsGroupTitle": "Passed audits but with warnings",
       "warningHeader": "Warnings: "
     },
@@ -5247,6 +5247,12 @@
         },
         {
           "values": {
+            "timeInMs": 116.79800000000023
+          },
+          "path": "audits[total-blocking-time].displayValue"
+        },
+        {
+          "values": {
             "timeInMs": 122.537
           },
           "path": "audits[max-potential-fid].displayValue"
@@ -5263,6 +5269,12 @@
           },
           "path": "audits[network-server-latency].displayValue"
         }
+      ],
+      "lighthouse-core/audits/metrics/total-blocking-time.js | title": [
+        "audits[total-blocking-time].title"
+      ],
+      "lighthouse-core/audits/metrics/total-blocking-time.js | description": [
+        "audits[total-blocking-time].description"
       ],
       "lighthouse-core/audits/metrics/max-potential-fid.js | title": [
         "audits[max-potential-fid].title"
@@ -6095,7 +6107,7 @@
       "lighthouse-core/audits/dobetterweb/js-libraries.js | description": [
         "audits[js-libraries].description"
       ],
-      "lighthouse-core/audits/dobetterweb/js-libraries.js | columnName": [
+      "lighthouse-core/lib/i18n/i18n.js | columnName": [
         "audits[js-libraries].details.headings[0].text"
       ],
       "lighthouse-core/audits/dobetterweb/js-libraries.js | columnVersion": [
