@@ -17,7 +17,8 @@ const collectAndBakeCtcStrings = require('./bake-ctc-to-lhl.js');
 const LH_ROOT = path.join(__dirname, '../../../');
 const UISTRINGS_REGEX = /UIStrings = (.|\s)*?\};\n/im;
 
-/** @typedef {import('./bake-ctc-to-lhl.js').ICUMessageDefn} ICUMessageDefn */
+/** @typedef {import('./bake-ctc-to-lhl.js').CtcMessage} CtcMessage */
+/** @typedef {Required<Pick<CtcMessage, 'message'|'placeholders'>>} IncrementalCtc */
 
 const ignoredPathComponents = [
   '/.git',
@@ -61,6 +62,7 @@ function computeDescription(ast, property, value, startRange) {
       return {description, examples};
     }
 
+    /** @type {string} */
     const description = comment.value.replace('*', '').trim();
 
     // Make sure description is not empty
@@ -103,37 +105,38 @@ function computeDescription(ast, property, value, startRange) {
  *
  * @param {string} message
  * @param {Record<string, string>} examples
- * @return {ICUMessageDefn}
+ * @return {Pick<CtcMessage, 'message'|'placeholders'>}
  */
 function convertMessageToCtc(message, examples = {}) {
-  const icuDefn = {
+  /** @type {IncrementalCtc} */
+  const ctc = {
     message,
     placeholders: {},
   };
 
   // Process each placeholder type
-  _processPlaceholderMarkdownCode(icuDefn);
+  _processPlaceholderMarkdownCode(ctc);
 
-  _processPlaceholderMarkdownLink(icuDefn);
+  _processPlaceholderMarkdownLink(ctc);
 
-  _processPlaceholderCustomFormattedIcu(icuDefn);
+  _processPlaceholderCustomFormattedIcu(ctc);
 
-  _processPlaceholderDirectIcu(icuDefn, examples);
+  _processPlaceholderDirectIcu(ctc, examples);
 
-  _ctcSanityChecks(icuDefn);
+  _ctcSanityChecks(ctc);
 
-  if (Object.entries(icuDefn.placeholders).length === 0) {
-    // @ts-ignore - if this is empty then force undefined so that it does not appear in the JSON
-    icuDefn.placeholders = undefined;
-  }
-
-  return icuDefn;
+  // Don't include placeholders if it's empty.
+  const placeholders = Object.keys(ctc.placeholders).length === 0 ? undefined : ctc.placeholders;
+  return {
+    message: ctc.message,
+    placeholders,
+  };
 }
 
 /**
  * Convert code spans into placeholders with examples.
  *
- * @param {ICUMessageDefn} icu
+ * @param {IncrementalCtc} icu
  */
 function _processPlaceholderMarkdownCode(icu) {
   // Check that number of backticks is even.
@@ -165,7 +168,7 @@ function _processPlaceholderMarkdownCode(icu) {
 /**
  * Convert markdown html links into placeholders.
  *
- * @param {ICUMessageDefn} icu
+ * @param {IncrementalCtc} icu
  */
 function _processPlaceholderMarkdownLink(icu) {
   // Check for markdown link common errors, ex:
@@ -215,7 +218,7 @@ function _processPlaceholderMarkdownLink(icu) {
  *    }
  *  }
  *
- * @param {ICUMessageDefn} icu
+ * @param {IncrementalCtc} icu
  */
 function _processPlaceholderCustomFormattedIcu(icu) {
   // Split on custom-formatted ICU: {var, number, type}
@@ -275,7 +278,7 @@ function _processPlaceholderCustomFormattedIcu(icu) {
 /**
  * Add examples for direct ICU replacement.
  *
- * @param {ICUMessageDefn} icu
+ * @param {IncrementalCtc} icu
  * @param {Record<string, string>} examples
  */
 function _processPlaceholderDirectIcu(icu, examples) {
@@ -312,7 +315,7 @@ function _processPlaceholderDirectIcu(icu, examples) {
  * Do some basic sanity checks to a ctc object to confirm that it is valid. Future
  * ctc regression catching should go here.
  *
- * @param {ICUMessageDefn} icu the ctc output message to verify
+ * @param {IncrementalCtc} icu the ctc output message to verify
  */
 function _ctcSanityChecks(icu) {
   // '$$' i.e. "Double Dollar" is always invalid in ctc.
@@ -327,10 +330,10 @@ function _ctcSanityChecks(icu) {
  * done while messages are in `ctc` format, and therefore modifies only the
  * messages themselves while leaving placeholders untouched.
  *
- * @param {Record<string, ICUMessageDefn>} messages
+ * @param {Record<string, CtcMessage>} messages
  */
 function createPsuedoLocaleStrings(messages) {
-  /** @type {Record<string, ICUMessageDefn>} */
+  /** @type {Record<string, CtcMessage>} */
   const psuedoLocalizedStrings = {};
   for (const [key, defn] of Object.entries(messages)) {
     const message = defn.message;
@@ -369,6 +372,7 @@ function createPsuedoLocaleStrings(messages) {
     }
     psuedoLocalizedStrings[key] = {
       message: psuedoLocalizedString.join(''),
+      description: defn.description,
       placeholders: defn.placeholders,
     };
   }
@@ -383,7 +387,8 @@ let collisions = 0;
 
 /**
  * @param {string} dir
- * @param {Record<string, ICUMessageDefn>} strings
+ * @param {Record<string, CtcMessage>} strings
+ * @return {Record<string, CtcMessage>}
  */
 function collectAllStringsInDir(dir, strings = {}) {
   for (const name of fs.readdirSync(dir)) {
@@ -430,7 +435,7 @@ function collectAllStringsInDir(dir, strings = {}) {
 
             const messageKey = `${relativePath} | ${key}`;
 
-            /** @type {ICUMessageDefn} */
+            /** @type {CtcMessage} */
             const icuDefn = {
               message: converted.message,
               description,
@@ -467,11 +472,11 @@ function collectAllStringsInDir(dir, strings = {}) {
 
 /**
  * @param {string} locale
- * @param {Record<string, ICUMessageDefn>} strings
+ * @param {Record<string, CtcMessage>} strings
  */
 function writeStringsToCtcFiles(locale, strings) {
   const fullPath = path.join(LH_ROOT, `lighthouse-core/lib/i18n/locales/${locale}.ctc.json`);
-  /** @type {Record<string, ICUMessageDefn>} */
+  /** @type {Record<string, CtcMessage>} */
   const output = {};
   const sortedEntries = Object.entries(strings).sort(([keyA], [keyB]) => keyA.localeCompare(keyB));
   for (const [key, defn] of sortedEntries) {
