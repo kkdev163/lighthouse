@@ -17,7 +17,11 @@ const UIStrings = {
   description: 'If the width of your app\'s content doesn\'t match the width ' +
     'of the viewport, your app might not be optimized for mobile screens. ' +
     '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/content-sized-correctly-for-viewport).',
-  /** Explanatory message stating that the viewport size and window size differ. */
+  /**
+   * @description Explanatory message stating that the viewport size and window size differ.
+   * @example {100} innerWidth
+   * @example {101} outerWidth
+   * */
   explanation: 'The viewport size of {innerWidth}px does not match the window ' +
     'size of {outerWidth}px.',
 };

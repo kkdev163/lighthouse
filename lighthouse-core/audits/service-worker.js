@@ -18,7 +18,10 @@ const UIStrings = {
   description: 'The service worker is the technology that enables your app to use many ' +
     'Progressive Web App features, such as offline, add to homescreen, and push ' +
     'notifications. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/registered-service-worker).',
-  /** Explanatory message stating that the page has multiple, or out of scope service workers. */
+  /**
+   * @description Explanatory message stating that the page has multiple, or out of scope service workers.
+   * @example {https://example.com/} pageUrl
+   * */
   explanationOutOfScope: 'This origin has one or more service workers, however the page ' +
     '({pageUrl}) is not in scope.',
   /** Explanatory message stating that the page has no manifest. */
@@ -27,7 +30,11 @@ const UIStrings = {
   /** Explanatory message stating that the page's manifest is invalid. */
   explanationBadManifest: 'This page is controlled by a service worker, however ' +
     'no start_url was found because manifest failed to parse as valid JSON',
-  /** Explanatory message stating that the manifest's start_url is not in scope, and therefor invalid. */
+  /**
+   * @description Explanatory message stating that the manifest's start_url is not in scope, and therefor invalid.
+   * @example {https://example2.com/} startUrl
+   * @example {https://example.com/} scopeUrl
+   * */
   explanationBadStartUrl: 'This page is controlled by a service worker, however ' +
     'the start_url ({startUrl}) is not in the service worker\'s scope ({scopeUrl})',
 };

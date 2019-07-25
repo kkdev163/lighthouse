@@ -16,7 +16,10 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user why the start_url should respond when requested offline. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'A service worker enables your web app to be reliable in unpredictable ' +
     'network conditions. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/http-200-when-offline).',
-  /** Warning that the audit couldn't find the start_url and used the page's URL instead. */
+  /**
+   * @description Warning that the audit couldn't find the start_url and used the page's URL instead.
+   * @example {No Manifest Fetched.} manifestWarning
+   * */
   warningCantStart: 'We couldn\'t read the start_url from the manifest. As a result, the ' +
     'start_url was assumed to be the document\'s URL. Error message: \'{manifestWarning}\'.',
 };

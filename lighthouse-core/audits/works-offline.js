@@ -18,7 +18,11 @@ const UIStrings = {
   description: 'If you\'re building a Progressive Web App, consider using a service worker ' +
       'so that your app can work offline. ' +
       '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/http-200-when-offline).',
-  /** Warning that the page redirected during offline load and that may affect offline testing. */
+  /**
+   * @description Warning that the page redirected during offline load and that may affect offline testing.
+   * @example {https://example.com/requested/page} requested
+   * @example {https://example.com/final/resolved/page} final
+   * */
   warningNoLoad: 'The page may be not loading offline because your test URL ' +
   `({requested}) was redirected to "{final}". ` +
   'Try testing the second URL directly.',
