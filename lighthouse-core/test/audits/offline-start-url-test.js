@@ -68,7 +68,7 @@ describe('Offline start_url audit', () => {
     assert.strictEqual(result.score, 1);
     assert.strictEqual(result.explanation, undefined);
     assert.strictEqual(result.warnings.length, 1);
-    expect(result.warnings[0]).toBeDisplayString('We couldn\'t read the start_url ' +
+    expect(result.warnings[0]).toBeDisplayString('Lighthouse couldn\'t read the start_url ' +
     'from the manifest. As a result, the start_url was assumed to be the document\'s URL. ' +
     'Error message: \'ERROR: start_url must be same-origin as document\'.');
   });
