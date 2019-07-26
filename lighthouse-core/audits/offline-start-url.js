@@ -9,18 +9,18 @@ const Audit = require('./audit.js');
 const i18n = require('../lib/i18n/i18n.js');
 
 const UIStrings = {
-  /** Title of a Lighthouse audit that provides detail on the start_url's offline validity. This descriptive title is shown to users when the manifest's start_url responds when requested offline. */
+  /** Title of a Lighthouse audit that provides detail on the start_url's offline capabilities. This descriptive title is shown to users when the manifest's start_url responds successfully while offline. */
   title: 'start_url responds with a 200 when offline',
-  /** Title of a Lighthouse audit that provides detail on the start_url's offline validity. This descriptive title is shown to users when the manifest's start_url does not respond when requested offline. */
+  /** Title of a Lighthouse audit that provides detail on the start_url's offline capabilities. This descriptive title is shown to users when the manifest's start_url does not respond successfully while offline. */
   failureTitle: 'start_url does not respond with a 200 when offline',
-  /** Description of a Lighthouse audit that tells the user why the start_url should respond when requested offline. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user why a site should respond when requested offline. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'A service worker enables your web app to be reliable in unpredictable ' +
     'network conditions. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/http-200-when-offline).',
   /**
    * @description Warning that the audit couldn't find the start_url and used the page's URL instead.
    * @example {No Manifest Fetched.} manifestWarning
    * */
-  warningCantStart: 'We couldn\'t read the start_url from the manifest. As a result, the ' +
+  warningCantStart: 'Lighthouse couldn\'t read the start_url from the manifest. As a result, the ' +
     'start_url was assumed to be the document\'s URL. Error message: \'{manifestWarning}\'.',
 };
 

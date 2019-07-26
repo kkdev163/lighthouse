@@ -9,7 +9,7 @@ const ManualAudit = require('./manual-audit.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
-  /** Title of a Lighthouse audit that provides detail on a site's pages all having distinct URLs. */
+  /** Title of a Lighthouse audit that suggests a site's pages should all have distinct URLs. */
   title: 'Each page has a URL',
   /** Description of a Lighthouse audit that tells the user why they should use distinct URLs for each page. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Ensure individual pages are deep linkable via the URLs and that URLs are ' +

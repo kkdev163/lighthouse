@@ -10,7 +10,7 @@ const ManualAudit = require('./manual-audit.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
-  /** Title of a Lighthouse audit that provides detail on whether or not a site works across different browsers. */
+  /** Title of a Lighthouse audit that suggests to the user that a site should work across different browsers. */
   title: 'Site works cross-browser',
   /** Description of a Lighthouse audit that tells the user why they should make sites work across different browsers. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'To reach the most number of users, sites should work across ' +

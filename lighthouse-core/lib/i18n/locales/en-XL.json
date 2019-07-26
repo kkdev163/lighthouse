@@ -846,7 +846,7 @@
     "message": "ŝt́âŕt̂_úr̂ĺ r̂éŝṕôńd̂ś ŵít̂h́ â 200 ẃĥén̂ óf̂f́l̂ín̂é"
   },
   "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "Ŵé ĉóûĺd̂ń't̂ ŕêád̂ t́ĥé ŝt́âŕt̂_úr̂ĺ f̂ŕôḿ t̂h́ê ḿâńîf́êśt̂. Áŝ á r̂éŝúl̂t́, t̂h́ê śt̂ár̂t́_ûŕl̂ ẃâś âśŝúm̂éd̂ t́ô b́ê t́ĥé d̂óĉúm̂én̂t́'ŝ ÚR̂Ĺ. Êŕr̂ór̂ ḿêśŝáĝé: '{manifestWarning}'."
+    "message": "L̂íĝh́t̂h́ôúŝé ĉóûĺd̂ń't̂ ŕêád̂ t́ĥé ŝt́âŕt̂_úr̂ĺ f̂ŕôḿ t̂h́ê ḿâńîf́êśt̂. Áŝ á r̂éŝúl̂t́, t̂h́ê śt̂ár̂t́_ûŕl̂ ẃâś âśŝúm̂éd̂ t́ô b́ê t́ĥé d̂óĉúm̂én̂t́'ŝ ÚR̂Ĺ. Êŕr̂ór̂ ḿêśŝáĝé: '{manifestWarning}'."
   },
   "lighthouse-core/audits/performance-budget.js | columnOverBudget": {
     "message": "Ôv́êŕ B̂úd̂ǵêt́"
@@ -861,7 +861,7 @@
     "message": "P̂ér̂f́ôŕm̂án̂ćê b́ûd́ĝét̂"
   },
   "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "Îf́ ŷóû'v́ê ál̂ŕêád̂ý ŝét̂ úp̂ H́T̂T́P̂Ś, m̂ák̂é ŝúr̂é t̂h́ât́ ŷóû ŕêd́îŕêćt̂ ál̂ĺ ĤT́T̂Ṕ t̂ŕâf́f̂íĉ t́ô H́T̂T́P̂Ś. [L̂éâŕn̂ ḿôŕê](https://developers.google.com/web/tools/lighthouse/audits/http-redirects-to-https)."
+    "message": "Îf́ ŷóû'v́ê ál̂ŕêád̂ý ŝét̂ úp̂ H́T̂T́P̂Ś, m̂ák̂é ŝúr̂é t̂h́ât́ ŷóû ŕêd́îŕêćt̂ ál̂ĺ ĤT́T̂Ṕ t̂ŕâf́f̂íĉ t́ô H́T̂T́P̂Ś îń ôŕd̂ér̂ én̂áb̂ĺê śêćûŕê ẃêb́ f̂éât́ûŕêś f̂ór̂ ál̂ĺ ŷóûŕ ûśêŕŝ. [Ĺêár̂ń m̂ór̂é](https://developers.google.com/web/tools/lighthouse/audits/http-redirects-to-https)."
   },
   "lighthouse-core/audits/redirects-http.js | failureTitle": {
     "message": "D̂óêś n̂ót̂ ŕêd́îŕêćt̂ H́T̂T́P̂ t́r̂áf̂f́îć t̂ó ĤT́T̂ṔŜ"

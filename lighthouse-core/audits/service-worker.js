@@ -12,7 +12,7 @@ const i18n = require('../lib/i18n/i18n.js');
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on a page's service worker. This descriptive title is shown to users when a service worker is registered and valid. */
   title: 'Registers a service worker that controls page and start_url',
-  /** Title of a Lighthouse audit that provides detail on a page's service worker. This descriptive title is shown to users when a service worker is invalid. */
+  /** Title of a Lighthouse audit that provides detail on a page's service worker. This descriptive title is shown to users when a service worker is not present or invalid. */
   failureTitle: 'Does not register a service worker that controls page and start_url',
   /** Description of a Lighthouse audit that tells the user why they should use a service worker. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'The service worker is the technology that enables your app to use many ' +

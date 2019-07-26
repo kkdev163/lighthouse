@@ -2205,7 +2205,7 @@
             "title": "Avoid multiple page redirects"
         },
         "redirects-http": {
-            "description": "If you've already set up HTTPS, make sure that you redirect all HTTP traffic to HTTPS. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/http-redirects-to-https).",
+            "description": "If you've already set up HTTPS, make sure that you redirect all HTTP traffic to HTTPS in order enable secure web features for all your users. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/http-redirects-to-https).",
             "id": "redirects-http",
             "score": 0.0,
             "scoreDisplayMode": "binary",
