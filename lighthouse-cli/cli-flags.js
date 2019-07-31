@@ -91,13 +91,13 @@ function getFlags(manualArgv) {
           'save-assets', 'list-all-audits', 'list-trace-categories', 'print-config', 'additional-trace-categories',
           'config-path', 'preset', 'chrome-flags', 'port', 'hostname', 'emulated-form-factor',
           'max-wait-for-load', 'enable-error-reporting', 'gather-mode', 'audit-mode',
-          'only-audits', 'only-categories', 'skip-audits', 'budget-path',
+          'only-audits', 'only-categories', 'skip-audits', 'budget-path', 'locale'
         ],
         'Configuration:')
       .describe({
         'cli-flags-path': 'The path to a JSON file that contains the desired CLI flags to apply. Flags specified at the command line will still override the file-based ones.',
         // We don't allowlist specific locales. Why? So we can support the user who requests 'es-MX' (unsupported) and we'll fall back to 'es' (supported)
-        'locale': 'The locale/language the report should be formatted in',
+        'locale': 'The locale/language the report should be formatted in, such as "en" "zh". More: https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/lib/i18n/locales.js',
         'enable-error-reporting':
             'Enables error reporting, overriding any saved preference. --no-enable-error-reporting will do the opposite. More: https://git.io/vFFTO',
         'blocked-url-patterns': 'Block any network requests to the specified URL patterns',
