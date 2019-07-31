@@ -113,6 +113,8 @@ declare global {
       onlyCategories?: string[] | null;
       /** If present, the run should skip this list of audits. */
       skipAudits?: string[] | null;
+      /** List of extra HTTP Cookies to include. */
+      extraCookies?: Crdp.Network.CookieParam[] | null; // See extraCookies TODO in bin.js
       /** List of extra HTTP Headers to include. */
       extraHeaders?: Crdp.Network.Headers | null; // See extraHeaders TODO in bin.js
       /** How Lighthouse was run, e.g. from the Chrome extension or from the npm module */

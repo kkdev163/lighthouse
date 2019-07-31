@@ -40,7 +40,7 @@ const fakeDriver = require('./fake-driver.js');
 const fakeDriverUsingRealMobileDevice = fakeDriver.fakeDriverUsingRealMobileDevice;
 
 function getMockedEmulationDriver(emulationFn, netThrottleFn, cpuThrottleFn,
-  blockUrlFn, extraHeadersFn) {
+  blockUrlFn, extraHeadersFn, extraCookiesFn) {
   const Driver = require('../../gather/driver.js');
   const Connection = require('../../gather/connections/connection.js');
   const EmulationDriver = class extends Driver {
@@ -80,6 +80,9 @@ function getMockedEmulationDriver(emulationFn, netThrottleFn, cpuThrottleFn,
           break;
         case 'Network.setExtraHTTPHeaders':
           fn = extraHeadersFn;
+          break;
+        case 'Network.setCookies':
+          fn = extraCookiesFn;
           break;
         default:
           fn = null;
@@ -397,6 +400,7 @@ describe('GatherRunner', function() {
       setThrottling: asyncFunc,
       blockUrlPatterns: asyncFunc,
       setExtraHTTPHeaders: asyncFunc,
+      setCookies: asyncFunc,
       endTrace: asyncFunc,
       endDevtoolsLog: () => [],
       getBrowserVersion: async () => ({userAgent: ''}),
@@ -576,6 +580,58 @@ describe('GatherRunner', function() {
         headers
       ));
   });
+
+  it('tells the driver to set additional cookies when extraCookies flag is given', () => {
+    let receivedCookies = null;
+    const driver = getMockedEmulationDriver(null, null, null, null, null, params => {
+      receivedCookies = params.cookies;
+    });
+    const cookies = [{
+      'name': 'cookie1',
+      'value': 'monster',
+      'domain': 'test.com',
+    }];
+
+    return GatherRunner.setupPassNetwork({
+      driver,
+      settings: {
+        extraCookies: cookies,
+      },
+      passConfig: { gatherers: [] },
+    }).then(() => assert.deepStrictEqual(
+      receivedCookies,
+      cookies
+    ));
+  });
+
+  it('uses current url as cookie\'s url if neither domain nor url is specified', () => {
+    let receivedCookies = null;
+    const driver = getMockedEmulationDriver(null, null, null, null, null, params => {
+      receivedCookies = params.cookies;
+    });
+    const inputCookies = [{
+      'name': 'cookie1',
+      'value': 'monster',
+    }];
+    const expectedCookies = [{
+      'name': 'cookie1',
+      'value': 'monster',
+      'url': 'http://test.com/some_path',
+    }];
+
+    return GatherRunner.setupPassNetwork({
+      url: 'http://test.com/some_path',
+      driver,
+      settings: {
+        extraCookies: inputCookies,
+      },
+      passConfig: { gatherers: [] },
+    }).then(() => assert.deepStrictEqual(
+      receivedCookies,
+      expectedCookies
+    ));
+  });
+  
 
   it('tells the driver to begin tracing', async () => {
     let calledTrace = false;

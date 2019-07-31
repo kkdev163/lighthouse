@@ -105,6 +105,19 @@ function requestHandler(request, response) {
         }
       }
 
+      if (params.has('extra_cookie')) {
+        const extraCookies = new URLSearchParams(params.get('extra_cookie'));
+        let cookeString = '';
+        for (const [cookieName, cookieValue] of extraCookies) {
+          cookeString += cookieName + '=' + cookieValue + ';';
+        }
+
+        // Extra cookie we allways override possible 'Set-Cookie' header
+        // which may be already present in request by extra_header
+        headers['Set-Cookie'] = [];
+        headers['Set-Cookie'].push(cookeString);
+      }
+
       if (params.has('gzip')) {
         useGzip = Boolean(params.get('gzip'));
       }

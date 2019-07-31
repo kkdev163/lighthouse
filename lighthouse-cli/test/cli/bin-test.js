@@ -170,6 +170,22 @@ describe('CLI bin', function() {
     });
   });
 
+  describe('extraCookies', () => {
+    it('should convert extra cookies to object', async () => {
+      // @ts-ignore - see TODO: in bin.js
+      cliFlags = { ...cliFlags, extraCookies: '[{"name":"foo", "value": "bar", "url": "http://localhost"}]' };
+      await bin.begin();
+
+      expect(getRunLighthouseArgs()[1]).toHaveProperty('extraCookies', [{ 'name': 'foo', 'value': 'bar', 'url': 'http://localhost' }]);
+    });
+
+    it('should throw when invalid array is used', async () => {
+      // @ts-ignore - see TODO: in bin.js
+      cliFlags = { ...cliFlags, extraCookies: 'INVALID_JSON_ARRAY' };
+      await expect(bin.begin()).rejects.toBeTruthy();
+    });
+  });
+
   describe('precomputedLanternData', () => {
     it('should read lantern data from file', async () => {
       const lanternDataFile = require.resolve('../fixtures/lantern-data.json');

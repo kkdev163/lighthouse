@@ -101,6 +101,7 @@ Options:
   --throttling.uploadThroughputKbps    Controls emulated network upload throughput
   --throttling.cpuSlowdownMultiplier   Controls simulated + emulated CPU throttling
   --extra-headers               Set extra HTTP Headers to pass with request                                                                 [string]
+  --extra-cookies                      Set extra HTTP Cookies to pass with request
 
 Examples:
   lighthouse <url> --view                                                   Opens the HTML report in a browser after the run completes
@@ -113,6 +114,8 @@ Examples:
   lighthouse <url> --quiet --chrome-flags="--headless"                      Launch Headless Chrome, turn off logging
   lighthouse <url> --extra-headers "{\"Cookie\":\"monster=blue\"}"          Stringify\'d JSON HTTP Header key/value pairs to send in requests
   lighthouse <url> --extra-headers=./path/to/file.json                      Path to JSON file of HTTP Header key/value pairs to send in requests
+  lighthouse <url> --extra-cookies "[{\"name\":\"session_id\",\"value\":\"x-men\" }]" Stringify'd JSON array of HTTP Cookies to send in requests
+  lighthouse <url> --extra-cookies=./path/to/file.json  Path to JSON file of HTTP Cookies to send in requests
 
 For more information on Lighthouse, see https://developers.google.com/web/tools/lighthouse/.
 ```

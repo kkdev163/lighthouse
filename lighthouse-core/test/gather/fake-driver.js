@@ -87,6 +87,9 @@ function makeFakeDriver({protocolGetVersionResponse}) {
     setExtraHTTPHeaders() {
       return Promise.resolve();
     },
+    setCookies() {
+      return Promise.resolve();
+    }
   };
 }
 

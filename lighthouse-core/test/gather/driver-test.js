@@ -355,6 +355,32 @@ describe('.setExtraHTTPHeaders', () => {
   });
 });
 
+describe('.setCookies', () => {
+  it('should call Network.setCookies when there are extra-cookies', async () => {
+    connectionStub.sendCommand = createMockSendCommandFn().mockResponse(
+      'Network.setCookies',
+      {}
+    );
+
+    await driver.setCookies([{
+      'name': 'cookie1',
+      'value': 'monster',
+    }]);
+
+    expect(connectionStub.sendCommand).toHaveBeenCalledWith(
+      'Network.setCookies',
+      expect.anything()
+    );
+  });
+
+  it('should not call Network.setCookies when there aren\'t extra-cookies', async () => {
+    connectionStub.sendCommand = createMockSendCommandFn();
+    await driver.setCookies();
+
+    expect(connectionStub.sendCommand).not.toHaveBeenCalled();
+  });
+});
+
 describe('.getAppManifest', () => {
   it('should return null when no manifest', async () => {
     connectionStub.sendCommand = createMockSendCommandFn().mockResponse(
