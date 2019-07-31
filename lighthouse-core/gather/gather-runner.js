@@ -266,7 +266,7 @@ class GatherRunner {
       return;
     }
     extraCookies.forEach(cookie => {
-      if (!cookie.url || !cookie.domain) {
+      if (!cookie.url && !cookie.domain) {
         // Default cookie URL to to current URL, if neither domain nor url is specified
         cookie.url = passContext.url;
       }
