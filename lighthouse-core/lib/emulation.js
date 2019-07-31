@@ -39,7 +39,8 @@ const DESKTOP_EMULATION_METRICS = {
 };
 
 // eslint-disable-next-line max-len
-const NEXUS5X_USERAGENT = 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3694.0 Mobile Safari/537.36 Chrome-Lighthouse';
+// TODO: add extra_ua as setting, remove hard code of NeteaseMusic.
+const NEXUS5X_USERAGENT = 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3694.0 Mobile Safari/537.36 Chrome-Lighthouse' + ' NeteaseMusic/5.9.0';
 // eslint-disable-next-line max-len
 const DESKTOP_USERAGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3694.0 Safari/537.36 Chrome-Lighthouse';
 
