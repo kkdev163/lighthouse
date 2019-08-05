@@ -89,7 +89,7 @@ function getFlags(manualArgv) {
       .group(
         [
           'save-assets', 'list-all-audits', 'list-trace-categories', 'print-config', 'additional-trace-categories',
-          'config-path', 'preset', 'chrome-flags', 'port', 'hostname', 'emulated-form-factor',
+          'config-path', 'preset', 'chrome-flags', 'port', 'hostname', 'emulated-form-factor', 'extra-emulated-user-agent', 'extra-cookies',
           'max-wait-for-load', 'enable-error-reporting', 'gather-mode', 'audit-mode',
           'only-audits', 'only-categories', 'skip-audits', 'budget-path', 'locale'
         ],
@@ -104,6 +104,7 @@ function getFlags(manualArgv) {
         'disable-storage-reset':
             'Disable clearing the browser cache and other storage APIs before a run',
         'emulated-form-factor': 'Controls the emulated device form factor (mobile vs. desktop) if not disabled',
+        'extra-emulated-user-agent': 'append extra User-Agent to emulated User-Agent',
         'throttling-method': 'Controls throttling method',
         'throttling.rttMs': 'Controls simulated network RTT (TCP layer)',
         'throttling.throughputKbps': 'Controls simulated network download throughput',
@@ -174,6 +175,7 @@ function getFlags(manualArgv) {
       .array('plugins')
       .string('extraHeaders')
       .string('extraCookies')
+      .string('extra-emulated-useragent')
       .string('channel')
       .string('precomputedLanternDataPath')
       .string('lanternDataOutputPath')

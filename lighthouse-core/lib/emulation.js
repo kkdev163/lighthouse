@@ -39,8 +39,7 @@ const DESKTOP_EMULATION_METRICS = {
 };
 
 // eslint-disable-next-line max-len
-// TODO: add extra_ua as setting, remove hard code of NeteaseMusic.
-const NEXUS5X_USERAGENT = 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3694.0 Mobile Safari/537.36 Chrome-Lighthouse' + ' NeteaseMusic/5.9.0';
+const NEXUS5X_USERAGENT = 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3694.0 Mobile Safari/537.36 Chrome-Lighthouse';
 // eslint-disable-next-line max-len
 const DESKTOP_USERAGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3694.0 Safari/537.36 Chrome-Lighthouse';
 
@@ -65,30 +64,49 @@ const NO_CPU_THROTTLE_METRICS = {
 
 /**
  * @param {Driver} driver
+ * @param {String | null} extraUA
  * @return {Promise<void>}
  */
-async function enableNexus5X(driver) {
+async function enableNexus5X(driver, extraUA) {
   await Promise.all([
     driver.sendCommand('Emulation.setDeviceMetricsOverride', NEXUS5X_EMULATION_METRICS),
     // Network.enable must be called for UA overriding to work
     driver.sendCommand('Network.enable'),
-    driver.sendCommand('Network.setUserAgentOverride', {userAgent: NEXUS5X_USERAGENT}),
+    driver.sendCommand('Network.setUserAgentOverride', { userAgent: appendExtraUA(NEXUS5X_USERAGENT, extraUA) }),
     driver.sendCommand('Emulation.setTouchEmulationEnabled', {enabled: true}),
   ]);
 }
 
 /**
  * @param {Driver} driver
+ * @param {String | null} extraUA
  * @return {Promise<void>}
  */
-async function enableDesktop(driver) {
+async function enableDesktop(driver, extraUA) {
   await Promise.all([
     driver.sendCommand('Emulation.setDeviceMetricsOverride', DESKTOP_EMULATION_METRICS),
     // Network.enable must be called for UA overriding to work
     driver.sendCommand('Network.enable'),
-    driver.sendCommand('Network.setUserAgentOverride', {userAgent: DESKTOP_USERAGENT}),
+    driver.sendCommand('Network.setUserAgentOverride', {userAgent: appendExtraUA(DESKTOP_USERAGENT, extraUA)}),
     driver.sendCommand('Emulation.setTouchEmulationEnabled', {enabled: false}),
   ]);
+}
+
+/**
+ * @param {String} defaultUA
+ * @param {String | null} extraUA
+ * @return {String}
+ */
+function appendExtraUA(defaultUA, extraUA) {
+  if (!extraUA) {
+    return defaultUA;
+  }
+
+  if (extraUA.startsWith(' ')) {
+    return defaultUA + extraUA;
+  } else {
+    return defaultUA + ' ' + extraUA;
+  }
 }
 
 /**

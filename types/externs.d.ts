@@ -103,6 +103,8 @@ declare global {
       disableStorageReset?: boolean;
       /** The form factor the emulation should use. */
       emulatedFormFactor?: 'mobile'|'desktop'|'none';
+      /** Append Extra UserAgent to Emulation Device UserAgent*/
+      extraEmulatedUserAgent?: string | null;
       /** The method used to throttle the network. */
       throttlingMethod?: 'devtools'|'simulate'|'provided';
       /** The throttling config settings. */
