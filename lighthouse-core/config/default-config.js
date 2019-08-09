@@ -138,6 +138,7 @@ const defaultConfig = {
       'seo/robots-txt',
       'seo/tap-targets',
       'accessibility',
+      'page-title',
     ],
   },
   {
@@ -202,6 +203,7 @@ const defaultConfig = {
     'performance-budget',
     'resource-summary',
     'third-party-summary',
+    'page-title',
     'manual/pwa-cross-browser',
     'manual/pwa-page-transitions',
     'manual/pwa-each-page-has-url',
@@ -404,6 +406,7 @@ const defaultConfig = {
         {id: 'metrics', weight: 0},
         {id: 'screenshot-thumbnails', weight: 0},
         {id: 'final-screenshot', weight: 0},
+        {id: 'page-title', weight: 0},
       ],
     },
     'accessibility': {

@@ -115,6 +115,8 @@ declare global {
       Offline: number;
       /** Size and compression opportunity information for all the images in the page. */
       OptimizedImages: Array<Artifacts.OptimizedImage | Artifacts.OptimizedImageError>;
+      /** The title of page document */
+      PageTitle: string;
       /** HTML snippets from any password inputs that prevent pasting. */
       PasswordInputsWithPreventedPaste: {snippet: string}[];
       /** Size info of all network records sent without compression and their size after gzipping. */
