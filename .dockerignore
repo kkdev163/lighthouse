@@ -1,0 +1,10 @@
+.git
+.gitignore
+.dockerignore
+README.md
+coverage
+dist
+node_modules
+latest-run
+.tmp
+
