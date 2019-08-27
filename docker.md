@@ -11,12 +11,12 @@ docker build -t webapm/google-chrome-headless-node -f Dockerfile.node --build-ar
 
 之后改动Lighthouse源码，只需要构建最顶层的镜像即可。
 ```
-docker build -t webapm/lighthouse:5.2.0-190809 -f Dockerfile --build-arg VERSION=5.2.0-190809 --no-cache=1 .
+docker build -t music163fn/wapm-lighthouse:5.2.0-chrome69-190827 -f Dockerfile --build-arg VERSION=5.2.0-190820 --no-cache=1 .
 ```
 
 ### 镜像使用
 参数是透传给lighthouse的，所以可以用如下命令:
 ```
-docker run --privileged -v /tmp/lighthouse:/home/chrome/reports webapm/lighthouse:5.2.0-190809  --chrome-flags=\'--headless --disable-gpu\' chrome://version
+docker run --privileged -v /tmp/lighthouse:/home/chrome/reports music163fn/wapm-lighthouse:5.2.0-chrome69-190827  --chrome-flags=\'--headless --disable-gpu\' --only-categories=performance chrome://version
 ```
 报告可在host机上的/tmp/lighthouse目录查看到

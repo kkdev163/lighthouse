@@ -1,4 +1,4 @@
-FROM femtopixel/google-chrome-headless
+FROM femtopixel/google-chrome-headless:69.0.3497.100-amd64
 
 USER root
 

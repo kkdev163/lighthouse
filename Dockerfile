@@ -1,4 +1,4 @@
-FROM webapm/google-chrome-headless-node
+FROM webapm/google-chrome-headless-node:69.0.3497.100-amd64
 
 ARG VERSION=5.2.0
 
