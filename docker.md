@@ -11,7 +11,7 @@ docker build -t webapm/google-chrome-headless-node -f Dockerfile.node --build-ar
 
 之后改动Lighthouse源码，只需要构建最顶层的镜像即可。
 ```
-docker build -t music163fn/wapm-lighthouse:5.2.0-chrome69-190827 -f Dockerfile --build-arg VERSION=5.2.0-190820 --no-cache=1 .
+docker build -t music163fn/wapm-lighthouse:5.2.0-chrome69-190916 -f Dockerfile --build-arg VERSION=5.2.0-190916 --no-cache=1 .
 ```
 
 ### 镜像使用

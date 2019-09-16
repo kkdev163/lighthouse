@@ -104,8 +104,9 @@ class PageDependencyGraph {
       // Skip all trace events that aren't schedulable tasks with sizable duration
       if (
         !TracingProcessor.isScheduleableTask(evt) ||
-        !evt.dur ||
-        evt.dur < minimumEvtDur
+        !evt.dur 
+        // attempt to fix https://github.com/GoogleChrome/lighthouse/issues/9627
+        //|| evt.dur < minimumEvtDur
       ) {
         i++;
         continue;
