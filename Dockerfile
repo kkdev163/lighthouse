@@ -1,6 +1,6 @@
 FROM webapm/google-chrome-headless-node:69.0.3497.100-amd64
 
-ARG VERSION=5.2.0
+ARG VERSION=5.4.0
 
 LABEL version="${VERSION}"
 
