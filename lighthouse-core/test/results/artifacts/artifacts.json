@@ -244,6 +244,7 @@
     {
       "type": "text/javascript",
       "src": null,
+      "id": "amp-style-styling-script",
       "async": false,
       "defer": false,
       "source": "head",
@@ -254,6 +255,7 @@
     {
       "type": null,
       "src": "http://localhost:10200/dobetterweb/dbw_tester.js",
+      "id": "dbw-tester-script",
       "async": false,
       "defer": false,
       "source": "head",
@@ -264,6 +266,7 @@
     {
       "type": "module",
       "src": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
+      "id": null,
       "async": false,
       "defer": false,
       "source": "head",
@@ -274,6 +277,7 @@
     {
       "type": "text/javascript",
       "src": null,
+      "id": "error-time",
       "async": false,
       "defer": false,
       "source": "head",
@@ -284,6 +288,7 @@
     {
       "type": null,
       "src": "http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000",
+      "id": null,
       "async": false,
       "defer": false,
       "source": "head",
@@ -294,6 +299,7 @@
     {
       "type": null,
       "src": null,
+      "id": null,
       "async": false,
       "defer": false,
       "source": "body",
@@ -304,6 +310,7 @@
     {
       "type": null,
       "src": null,
+      "id": null,
       "async": false,
       "defer": false,
       "source": "body",
@@ -314,6 +321,7 @@
     {
       "type": null,
       "src": null,
+      "id": null,
       "async": false,
       "defer": false,
       "source": "body",
@@ -324,6 +332,7 @@
     {
       "type": null,
       "src": "http://localhost:10200/zone.js",
+      "id": null,
       "async": false,
       "defer": false,
       "source": "body",
@@ -334,6 +343,7 @@
     {
       "type": null,
       "src": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
+      "id": null,
       "async": false,
       "defer": false,
       "source": "body",
